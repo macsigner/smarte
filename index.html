@@ -7,7 +7,68 @@
     <title>SmaRTe - srt file translator</title>
 </head>
 <body>
-<h1>srt file translator</h1>
+<main class="container">
+    <h1>srt file translator</h1>
+    <form>
+        <div class="row">
+            <div class="mb3 col-12">
+                <label for="formFile" class="form-label">Default file input example</label>
+                <input class="form-control" type="file" id="formFile">
+            </div>
+        </div>
+        <hr>
+        <button type="submit" class="btn btn-primary">Translate</button>
+    </form>
+    <hr>
+    <div class="row">
+        <div class="col" id="input">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-dark">1</li>
+                        <li class="list-group-item">00:00:00,498 --> 00:00:02,827</li>
+                        <li class="list-group-item list-group-item-info preserve-white-space">Here's what I love most
+                            about food and diet.
+                        </li>
+                    </ul>
+                </li>
+                <li class="list-group-item">
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-dark">2</li>
+                        <li class="list-group-item">00:00:02,827 --> 00:00:06,383</li>
+                        <li class="list-group-item list-group-item-info preserve-white-space">
+                            We all eat several times a day,
+                            and we're totally in charge
+                        </li>
+                    </ul>
+                </li>
+                <li class="list-group-item">
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-dark">3</li>
+                        <li class="list-group-item">00:00:06,383 --> 00:00:09,427</li>
+                        <li class="list-group-item list-group-item-info preserve-white-space">
+                            of what goes on our plate
+                            and what stays off.
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="col" id="output">
+            <ul class="list-group">
+                <li class="list-group-item">A simple default list group item</li>
+                <li class="list-group-item list-group-item-primary">A simple primary list group item</li>
+                <li class="list-group-item list-group-item-secondary">A simple secondary list group item</li>
+                <li class="list-group-item list-group-item-success">A simple success list group item</li>
+                <li class="list-group-item list-group-item-danger">A simple danger list group item</li>
+                <li class="list-group-item list-group-item-warning">A simple warning list group item</li>
+                <li class="list-group-item list-group-item-info">A simple info list group item</li>
+                <li class="list-group-item list-group-item-light">A simple light list group item</li>
+                <li class="list-group-item list-group-item-dark">A simple dark list group item</li>
+            </ul>
+        </div>
+    </div>
+</main>
 <script type="module" src="/main.js"></script>
 </body>
 </html>
