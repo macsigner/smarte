@@ -4,7 +4,7 @@ import {debounce} from './src/js/tools/misc.js';
 
 const deeplApiKeyInput = document.querySelector('#deeplApiKey');
 
-if(localStorage.getItem('deeplApiKey')) {
+if (localStorage.getItem('deeplApiKey')) {
     deeplApiKeyInput.value = localStorage.getItem('deeplApiKey');
 }
 
@@ -22,34 +22,41 @@ let subtitles = raw.split('\n\n').map(item => {
     };
 });
 
-console.log(JSON.stringify(subtitles));
-
 const input = document.querySelector('#input');
+const output = document.querySelector('#output');
 
-let html = '';
-for (let subtitle of subtitles) {
-    html += `
+const render = (arr = subtitles, container = input) => {
+    let html = '';
+    for (let item of arr) {
+        html += `
     <li class="list-group-item">
-        <ul class="list-group" data-index="${subtitle.index}">
-            <li class="list-group-item list-group-item-dark">${subtitle.index}</li>
-            <li class="list-group-item">${subtitle.timeframe}</li>
-            <li class="list-group-item list-group-item-info preserve-white-space">${subtitle.subtitle}</li>
+        <ul class="list-group" data-index="${item.index}">
+            <li class="list-group-item list-group-item-dark">${item.index}</li>
+            <li class="list-group-item">${item.timeframe}</li>
+            <li class="list-group-item list-group-item-info preserve-white-space">${item.subtitle}</li>
         </ul>
     </li>
 `;
-}
+    }
 
-input.innerHTML = `<ul class="list-group list-group-flush">${html}</ul>`;
+    container.innerHTML = `<ul class="list-group list-group-flush">${html}</ul>`;
+};
 
-const transText = subtitles.reduce((prev, current) => prev + '\n\n---\n\n' + current.subtitle);
+render();
 
-const resp = await fetch("https://api-free.deepl.com/", {
+console.log('resp');
+const resp = await fetch("https://smarte-trans-api.onrender.com/api/", {
     method: "POST",
-    body: new URLSearchParams(transText).toString(),
-    headers: new Headers({
-        'Authorization': 'DeepL-Auth-Key ' + deeplApiKeyInput.value,
-        'Content-Type': 'application/x-www-form-urlencoded'
+    body: JSON.stringify({
+        target_lang: 'de',
+        key: deeplApiKeyInput.value,
+        items: subtitles,
     }),
+    headers: {
+        'Content-Type': 'application/json'
+    },
 });
 
-console.log(resp);
+const json = await resp.json();
+
+render(json, output);
