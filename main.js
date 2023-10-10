@@ -1,5 +1,17 @@
 import './src/scss/main.scss'
 import raw from './example.srt?raw';
+import {debounce} from './src/js/tools/misc.js';
+
+const deeplApiKeyInput = document.querySelector('#deeplApiKey');
+
+if(localStorage.getItem('deeplApiKey')) {
+    deeplApiKeyInput.value = localStorage.getItem('deeplApiKey');
+}
+
+deeplApiKeyInput.addEventListener('input', debounce(() => {
+    console.log('change');
+    localStorage.setItem('deeplApiKey', deeplApiKeyInput.value);
+}, 500));
 
 let subtitles = raw.split('\n\n').map(item => {
     const arr = item.split('\n')
@@ -8,7 +20,9 @@ let subtitles = raw.split('\n\n').map(item => {
         timeframe: arr[1],
         subtitle: arr.slice(2).join('\n'),
     };
-})
+});
+
+console.log(JSON.stringify(subtitles));
 
 const input = document.querySelector('#input');
 
@@ -27,4 +41,15 @@ for (let subtitle of subtitles) {
 
 input.innerHTML = `<ul class="list-group list-group-flush">${html}</ul>`;
 
-console.log(subtitles);
+const transText = subtitles.reduce((prev, current) => prev + '\n\n---\n\n' + current.subtitle);
+
+const resp = await fetch("https://api-free.deepl.com/", {
+    method: "POST",
+    body: new URLSearchParams(transText).toString(),
+    headers: new Headers({
+        'Authorization': 'DeepL-Auth-Key ' + deeplApiKeyInput.value,
+        'Content-Type': 'application/x-www-form-urlencoded'
+    }),
+});
+
+console.log(resp);
