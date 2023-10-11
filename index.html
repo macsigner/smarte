@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="icon" type="image/svg+xml" href="/vite.svg"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>SmaRTe - srt file translator</title>
+  <script type="module" crossorigin src="/assets/index-f1a55654.js"></script>
+  <link rel="stylesheet" href="/assets/index-f95a3103.css">
+</head>
+<body>
+<main class="container">
+    <h1>srt file translator</h1>
+    <form id="config-form">
+        <div class="row">
+            <div class="mb3 col">
+                <label for="srt-file" class="form-label">Default file input example</label>
+                <input class="form-control" type="file" id="srt-file" name="srtFile" accept=".srt">
+            </div>
+            <div class="mb-3">
+                <label for="key" class="form-label" name="key">Deepl API key</label>
+                <input type="text" class="form-control" id="key">
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col">
+        <button type="submit" class="btn btn-primary">Translate</button>
+            </div>
+            <div class="col row">
+                <a class="btn col btn-outline-primary" id="download-button" download="example.srt">Download</a>
+            </div>
+        </div>
+    </form>
+    <hr>
+    <div class="row compare">
+        <div class="compare__section compare__section--left" id="input">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-dark">1</li>
+                        <li class="list-group-item">00:00:00,498 --> 00:00:02,827</li>
+                        <li class="list-group-item list-group-item-info preserve-white-space">Here's what I love most
+                            about food and diet.
+                        </li>
+                    </ul>
+                </li>
+                <li class="list-group-item">
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-dark">2</li>
+                        <li class="list-group-item">00:00:02,827 --> 00:00:06,383</li>
+                        <li class="list-group-item list-group-item-info preserve-white-space">
+                            We all eat several times a day,
+                            and we're totally in charge
+                        </li>
+                    </ul>
+                </li>
+                <li class="list-group-item">
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-dark">3</li>
+                        <li class="list-group-item">00:00:06,383 --> 00:00:09,427</li>
+                        <li class="list-group-item list-group-item-info preserve-white-space">
+                            of what goes on our plate
+                            and what stays off.
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="compare__section compare__section--right" id="output">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-dark">subtitle index</li>
+                        <li class="list-group-item">from --> to</li>
+                        <li class="list-group-item list-group-item-info preserve-white-space">subtitle</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>
