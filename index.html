@@ -13,7 +13,7 @@
         <div class="row">
             <div class="mb3 col">
                 <label for="srt-file" class="form-label">Default file input example</label>
-                <input class="form-control" type="file" id="srt-file" name="srtFile">
+                <input class="form-control" type="file" id="srt-file" name="srtFile" accept=".srt">
             </div>
             <div class="mb-3">
                 <label for="key" class="form-label" name="key">Deepl API key</label>
@@ -21,7 +21,14 @@
             </div>
         </div>
         <hr>
+        <div class="row">
+            <div class="col">
         <button type="submit" class="btn btn-primary">Translate</button>
+            </div>
+            <div class="col row">
+                <a class="btn col btn-outline-primary" id="download-button" download="example.srt">Download</a>
+            </div>
+        </div>
     </form>
     <hr>
     <div class="row compare">

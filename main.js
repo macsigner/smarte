@@ -2,6 +2,9 @@ import './src/scss/main.scss'
 import demoFile from './example.srt?raw';
 import {debounce} from './src/js/tools/misc.js';
 
+let subtitleFile;
+let lang = 'de';
+
 const deeplApiKeyInput = document.querySelector('#key');
 
 if (localStorage.getItem('deeplApiKey')) {
@@ -12,9 +15,15 @@ deeplApiKeyInput.addEventListener('input', debounce(() => {
     localStorage.setItem('deeplApiKey', deeplApiKeyInput.value);
 }, 500));
 
+const downloadButton = document.querySelector('#download-button');
+downloadButton.classList.add('disabled');
+
 const form = document.querySelector('#config-form');
 form.addEventListener('submit', async e => {
     e.preventDefault();
+
+    downloadButton.classList.add('disabled');
+    output.innerHTML = ''
 
     const resp = await fetch("https://smarte-trans-api.onrender.com/api/", {
         method: "POST",
@@ -31,6 +40,19 @@ form.addEventListener('submit', async e => {
     const json = await resp.json();
 
     render(json, output);
+
+    const txt = convertSubtitlesToSrt(json);
+
+    let type = 'text/plain';
+    if (subtitleFile) {
+        let str = subtitleFile.name;
+        downloadButton.download = str.substring(0, str.lastIndexOf('.srt')) + `_${lang}.srt`;
+
+        type = subtitleFile.type;
+    }
+
+    downloadButton.href = `data:${type};charset=utf-8,${txt}`;
+    downloadButton.classList.remove('disabled');
 });
 
 form.addEventListener('input', e => {
@@ -41,6 +63,8 @@ form.addEventListener('input', e => {
             const reader = new FileReader();
             reader.onload = function(e) {
                 subtitles = parseSrtContent(e.target.result);
+                subtitleFile = file;
+
                 render(subtitles);
             }
             reader.onerror = () => {
@@ -67,6 +91,12 @@ const parseSrtContent = (srt = demoFile) => {
 }
 
 let subtitles = parseSrtContent();
+
+const convertSubtitlesToSrt = (subs) => {
+    return subs.reduce((prev, current) => {
+        return prev + `${current.index}\n${current.timeframe}\n${current.subtitle}\n\n`
+    }, '').trim();
+};
 
 const input = document.querySelector('#input');
 const output = document.querySelector('#output');
