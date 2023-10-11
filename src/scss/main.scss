@@ -3,3 +3,23 @@
 .preserve-white-space {
   white-space: pre-line;
 }
+
+.compare {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(10px, 1fr));
+  grid-gap: 10px;
+  grid-auto-flow: dense;
+
+  &__section,
+  &__section > * {
+    display: contents;
+  }
+
+  &__section--left > * > * {
+    grid-column: 1 / 2;
+  }
+
+  &__section--right > * > * {
+    grid-column: 2 / -1;
+  }
+}

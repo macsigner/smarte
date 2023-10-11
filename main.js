@@ -2,7 +2,7 @@ import './src/scss/main.scss'
 import raw from './example.srt?raw';
 import {debounce} from './src/js/tools/misc.js';
 
-const deeplApiKeyInput = document.querySelector('#deeplApiKey');
+const deeplApiKeyInput = document.querySelector('#key');
 
 if (localStorage.getItem('deeplApiKey')) {
     deeplApiKeyInput.value = localStorage.getItem('deeplApiKey');
@@ -12,6 +12,27 @@ deeplApiKeyInput.addEventListener('input', debounce(() => {
     console.log('change');
     localStorage.setItem('deeplApiKey', deeplApiKeyInput.value);
 }, 500));
+
+const form = document.querySelector('#config-form');
+form.addEventListener('submit', async e => {
+    e.preventDefault();
+
+    const resp = await fetch("https://smarte-trans-api.onrender.com/api/", {
+        method: "POST",
+        body: JSON.stringify({
+            target_lang: 'de',
+            key: deeplApiKeyInput.value,
+            items: subtitles,
+        }),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    });
+
+    const json = await resp.json();
+
+    render(json, output);
+})
 
 let subtitles = raw.split('\n\n').map(item => {
     const arr = item.split('\n')
@@ -43,20 +64,3 @@ const render = (arr = subtitles, container = input) => {
 };
 
 render();
-
-console.log('resp');
-const resp = await fetch("https://smarte-trans-api.onrender.com/api/", {
-    method: "POST",
-    body: JSON.stringify({
-        target_lang: 'de',
-        key: deeplApiKeyInput.value,
-        items: subtitles,
-    }),
-    headers: {
-        'Content-Type': 'application/json'
-    },
-});
-
-const json = await resp.json();
-
-render(json, output);

@@ -9,23 +9,23 @@
 <body>
 <main class="container">
     <h1>srt file translator</h1>
-    <form>
+    <form id="config-form">
         <div class="row">
             <div class="mb3 col">
-                <label for="formFile" class="form-label">Default file input example</label>
-                <input class="form-control" type="file" id="formFile">
+                <label for="srt-file" class="form-label">Default file input example</label>
+                <input class="form-control" type="file" id="srt-file" name="srtFile">
             </div>
             <div class="mb-3">
-                <label for="deeplApiKey" class="form-label">deeplApiKey</label>
-                <input type="email" class="form-control" id="deeplApiKey">
+                <label for="key" class="form-label" name="key">Deepl API key</label>
+                <input type="text" class="form-control" id="key">
             </div>
         </div>
         <hr>
         <button type="submit" class="btn btn-primary">Translate</button>
     </form>
     <hr>
-    <div class="row">
-        <div class="col" id="input">
+    <div class="row compare">
+        <div class="compare__section compare__section--left" id="input">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
                     <ul class="list-group">
@@ -58,17 +58,15 @@
                 </li>
             </ul>
         </div>
-        <div class="col" id="output">
-            <ul class="list-group">
-                <li class="list-group-item">A simple default list group item</li>
-                <li class="list-group-item list-group-item-primary">A simple primary list group item</li>
-                <li class="list-group-item list-group-item-secondary">A simple secondary list group item</li>
-                <li class="list-group-item list-group-item-success">A simple success list group item</li>
-                <li class="list-group-item list-group-item-danger">A simple danger list group item</li>
-                <li class="list-group-item list-group-item-warning">A simple warning list group item</li>
-                <li class="list-group-item list-group-item-info">A simple info list group item</li>
-                <li class="list-group-item list-group-item-light">A simple light list group item</li>
-                <li class="list-group-item list-group-item-dark">A simple dark list group item</li>
+        <div class="compare__section compare__section--right" id="output">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-dark">subtitle index</li>
+                        <li class="list-group-item">from --> to</li>
+                        <li class="list-group-item list-group-item-info preserve-white-space">subtitle</li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
