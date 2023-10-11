@@ -25,17 +25,21 @@ form.addEventListener('submit', async e => {
     downloadButton.classList.add('disabled');
     output.innerHTML = ''
 
-    const resp = await fetch("https://smarte-trans-api.onrender.com/api/", {
-        method: "POST",
-        body: JSON.stringify({
-            target_lang: 'de',
-            key: deeplApiKeyInput.value,
-            items: subtitles,
-        }),
-        headers: {
-            'Content-Type': 'application/json'
-        },
-    });
+    try {
+        const resp = await fetch("https://smarte-trans-api.onrender.com/api/", {
+            method: "POST",
+            body: JSON.stringify({
+                target_lang: 'de',
+                key: deeplApiKeyInput.value,
+                items: subtitles,
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+    } catch (e) {
+        console.log(e);
+    }
 
     const json = await resp.json();
 
