@@ -37,26 +37,25 @@ form.addEventListener('submit', async e => {
                 'Content-Type': 'application/json'
             },
         });
+        const json = await resp.json();
+
+        render(json, output);
+
+        const txt = convertSubtitlesToSrt(json);
+
+        let type = 'text/plain';
+        if (subtitleFile) {
+            let str = subtitleFile.name;
+            downloadButton.download = str.substring(0, str.lastIndexOf('.srt')) + `_${lang}.srt`;
+
+            type = subtitleFile.type;
+        }
+
+        downloadButton.href = `data:${type};charset=utf-8,${txt}`;
+        downloadButton.classList.remove('disabled');
     } catch (e) {
         console.log(e);
     }
-
-    const json = await resp.json();
-
-    render(json, output);
-
-    const txt = convertSubtitlesToSrt(json);
-
-    let type = 'text/plain';
-    if (subtitleFile) {
-        let str = subtitleFile.name;
-        downloadButton.download = str.substring(0, str.lastIndexOf('.srt')) + `_${lang}.srt`;
-
-        type = subtitleFile.type;
-    }
-
-    downloadButton.href = `data:${type};charset=utf-8,${txt}`;
-    downloadButton.classList.remove('disabled');
 });
 
 form.addEventListener('input', e => {
